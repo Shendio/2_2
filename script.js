@@ -19,7 +19,24 @@
   })
 
   cw2.addEventListener("click", function () {
-    //TODO
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.json())
+      .then(posts => {
+        const table = document.createElement('table')
+        table.className = 'posts'
+        posts.slice(0, 10).forEach(post => {
+          const row = table.insertRow()
+          const cell = row.insertCell()
+          cell.className = 'post'
+          const title = document.createElement('h3')
+          title.textContent = post.title
+          const body = document.createElement('p')
+          body.textContent = post.body
+          cell.append(title, body)
+        })
+        answer.innerHTML = ''
+        answer.appendChild(table)
+      })
   })
 
   cw3.addEventListener("click", function () {

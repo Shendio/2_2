@@ -19,8 +19,18 @@
   })
 
   cw2.addEventListener("click", function () {
+    const overlay = document.createElement('div')
+    overlay.className = 'loading-overlay'
+    const popup = document.createElement('div')
+    popup.className = 'loading-popup'
+    popup.textContent = 'Loading…'
+    overlay.appendChild(popup)
+    document.body.appendChild(overlay)
+
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then(response => response.json())
+      .then(data => new Promise(resolve => setTimeout(() => resolve(data), 1000)))
+      .finally(() => overlay.remove())
       .then(posts => {
         console.log(posts[0])
         const table = document.createElement('table')
